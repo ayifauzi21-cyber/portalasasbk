@@ -1,728 +1,273 @@
 <!doctype html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portal ASABK 2026 - SMPN 1 Manonjaya</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap");
-      body {
-        font-family: "Inter", sans-serif;
-        background-color: #f8fafc;
-      }
-      .glass-card {
-        background: rgba(255, 255, 255, 0.96);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(226, 232, 240, 0.85);
-      }
-      .hero-custom {
-        position: relative;
-        background-image: url("foto-bareng.jpg");
-        background-size: cover;
-        background-position: center 30%;
-        min-height: 350px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .hero-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          to bottom,
-          rgba(30, 58, 138, 0.76),
-          rgba(15, 23, 42, 0.9)
-        );
-        z-index: 1;
-      }
-      .hero-content {
-        position: relative;
-        z-index: 2;
-      }
-      .grade-button,
-      .session-button,
-      .btn-exam {
-        transition: all 0.2s ease;
-      }
-      .grade-button:hover:not(.active),
-      .session-button:hover:not(.active) {
-        transform: translateY(-2px);
-      }
-      .grade-button.active {
-        color: white;
-        border-color: transparent;
-        background: linear-gradient(110deg, #2563eb, #4f46e5);
-        box-shadow: 0 12px 22px -12px rgba(37, 99, 235, 0.65);
-      }
-      .grade-button.active[data-grade="8"] {
-        background: linear-gradient(110deg, #059669, #0d9488);
-        box-shadow: 0 12px 22px -12px rgba(5, 150, 105, 0.65);
-      }
-      .grade-button.active[data-grade="9"] {
-        background: linear-gradient(110deg, #7c3aed, #4f46e5);
-        box-shadow: 0 12px 22px -12px rgba(124, 58, 237, 0.65);
-      }
-      .session-button.active {
-        color: white;
-        background: #1d4ed8;
-        border-color: #1d4ed8;
-      }
-      .locked {
-        opacity: 0.75;
-      }
-    </style>
-  </head>
-  <body class="text-slate-800">
-    <header class="hero-custom text-white py-14 px-4 shadow-2xl">
-      <div class="hero-overlay"></div>
-      <div class="max-w-5xl mx-auto text-center hero-content">
-        <div class="flex justify-center mb-5">
-          <div
-            class="bg-white/20 backdrop-blur-md p-4 rounded-full border border-white/30 shadow-xl"
-          >
-            <i class="fas fa-graduation-cap text-white text-4xl"></i>
-          </div>
-        </div>
-        <h1
-          class="text-3xl md:text-5xl font-extrabold mb-3 tracking-tight drop-shadow-lg"
-        >
-          PORTAL ASABK 2026
-        </h1>
-        <p class="text-xl md:text-2xl text-blue-100 font-semibold">
-          SMP Negeri 1 Manonjaya
-        </p>
-        <p class="text-sm text-blue-200 mt-1 uppercase tracking-widest">
-          Kabupaten Tasikmalaya
-        </p>
-        <div
-          id="current-time-display"
-          class="mt-7 inline-block bg-white/10 backdrop-blur-lg px-6 py-3 rounded-2xl border border-white/20 font-mono font-bold"
-        >
-          Memuat waktu...
-        </div>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal ASABK 2026 - SMPN 1 Manonjaya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap");
+    body { font-family: "Inter", sans-serif; background-color: #f8fafc; }
+    .glass-card { background: rgba(255,255,255,.96); backdrop-filter: blur(10px); border: 1px solid rgba(226,232,240,.85); }
+    .hero-custom { position:relative; background-image:url("foto-bareng.jpg"); background-size:cover; background-position:center 30%; min-height:350px; display:flex; align-items:center; justify-content:center; }
+    .hero-overlay { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(30,58,138,.76),rgba(15,23,42,.9)); z-index:1; }
+    .hero-content { position:relative; z-index:2; }
+    .grade-button,.session-button,.btn-exam { transition:all .2s ease; }
+    .grade-button:hover:not(.active),.session-button:hover:not(.active) { transform:translateY(-2px); }
+    .grade-button.active { color:white; border-color:transparent; background:linear-gradient(110deg,#2563eb,#4f46e5); box-shadow:0 12px 22px -12px rgba(37,99,235,.65); }
+    .grade-button.active[data-grade="8"] { background:linear-gradient(110deg,#059669,#0d9488); box-shadow:0 12px 22px -12px rgba(5,150,105,.65); }
+    .grade-button.active[data-grade="9"] { background:linear-gradient(110deg,#7c3aed,#4f46e5); box-shadow:0 12px 22px -12px rgba(124,58,237,.65); }
+    .session-button.active { color:white; background:#1d4ed8; border-color:#1d4ed8; }
+    .locked { opacity:.75; }
+  </style>
+</head>
+<body class="text-slate-800">
+  <header class="hero-custom text-white py-14 px-4 shadow-2xl">
+    <div class="hero-overlay"></div>
+    <div class="max-w-5xl mx-auto text-center hero-content">
+      <div class="flex justify-center mb-5"><div class="bg-white/20 backdrop-blur-md p-4 rounded-full border border-white/30 shadow-xl"><i class="fas fa-graduation-cap text-white text-4xl"></i></div></div>
+      <h1 class="text-3xl md:text-5xl font-extrabold mb-3 tracking-tight drop-shadow-lg">PORTAL ASABK 2026</h1>
+      <p class="text-xl md:text-2xl text-blue-100 font-semibold">SMP Negeri 1 Manonjaya</p>
+      <p class="text-sm text-blue-200 mt-1 uppercase tracking-widest">Kabupaten Tasikmalaya</p>
+      <div id="current-time-display" class="mt-7 inline-block bg-white/10 backdrop-blur-lg px-6 py-3 rounded-2xl border border-white/20 font-mono font-bold">Memuat waktu...</div>
+    </div>
+  </header>
 
-    <main class="max-w-6xl mx-auto px-4 py-10">
-      <div
-        class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10 -mt-16 relative z-10"
-      >
-        <div
-          class="glass-card p-5 rounded-3xl shadow-lg border-t-4 border-blue-600"
-        >
-          <h3
-            class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2"
-          >
-            Status Portal
-          </h3>
-          <div class="flex items-center">
-            <span
-              class="w-3 h-3 bg-green-500 rounded-full animate-pulse mr-2"
-            ></span
-            ><span class="font-bold text-lg">Sistem Online</span>
-          </div>
-        </div>
-        <div
-          class="glass-card p-5 rounded-3xl shadow-lg border-t-4 border-amber-500"
-        >
-          <h3
-            class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2"
-          >
-            Pilihan Ujian
-          </h3>
-          <div id="active-session-text" class="font-bold text-lg">
-            Pilih kelas dan sesi
-          </div>
-        </div>
-        <div
-          class="glass-card p-5 rounded-3xl shadow-lg border-t-4 border-indigo-600"
-        >
-          <h3
-            class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2"
-          >
-            Tahun Pelajaran
-          </h3>
-          <div class="font-bold text-lg">2026 / 2027</div>
-        </div>
-      </div>
-
-      <section class="mb-10">
-        <div class="flex items-center mb-5">
-          <span class="w-2 h-8 bg-blue-600 rounded-full mr-3"></span>
-          <h2 class="text-2xl font-extrabold">1. Pilih Tingkat Kelas</h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <button
-            type="button"
-            class="grade-button w-full text-left bg-white border border-slate-200 rounded-3xl p-5 shadow-sm"
-            data-grade="7"
-            onclick="selectClass(7)"
-          >
-            <div class="flex items-center gap-4">
-              <div
-                class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl"
-              >
-                <i class="fas fa-user-graduate"></i>
-              </div>
-              <div>
-                <div class="font-extrabold text-xl">KELAS VII</div>
-                <div class="text-sm opacity-75">9–13 November 2026</div>
-              </div>
-            </div>
-          </button>
-          <button
-            type="button"
-            class="grade-button w-full text-left bg-white border border-slate-200 rounded-3xl p-5 shadow-sm"
-            data-grade="8"
-            onclick="selectClass(8)"
-          >
-            <div class="flex items-center gap-4">
-              <div
-                class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl"
-              >
-                <i class="fas fa-user-graduate"></i>
-              </div>
-              <div>
-                <div class="font-extrabold text-xl">KELAS VIII</div>
-                <div class="text-sm opacity-75">16–20 November 2026</div>
-              </div>
-            </div>
-          </button>
-          <button
-            type="button"
-            class="grade-button w-full text-left bg-white border border-slate-200 rounded-3xl p-5 shadow-sm"
-            data-grade="9"
-            onclick="selectClass(9)"
-          >
-            <div class="flex items-center gap-4">
-              <div
-                class="w-14 h-14 rounded-2xl bg-violet-50 text-violet-600 flex items-center justify-center text-2xl"
-              >
-                <i class="fas fa-user-graduate"></i>
-              </div>
-              <div>
-                <div class="font-extrabold text-xl">KELAS IX</div>
-                <div class="text-sm opacity-75">23–27 November 2026</div>
-              </div>
-            </div>
-          </button>
-        </div>
-      </section>
-
-      <section id="session-section" class="mb-10 hidden">
-        <div class="flex items-center mb-3">
-          <span class="w-2 h-8 bg-emerald-600 rounded-full mr-3"></span>
-          <h2 class="text-2xl font-extrabold">2. Pilih Sesi Ujian</h2>
-        </div>
-        <p class="text-sm text-slate-500 mb-5">
-          Pilih sesi yang ditetapkan untuk Anda. Sesi dapat diganti sebelum
-          ujian dimulai.
-        </p>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="session-buttons">
-          <button
-            type="button"
-            class="session-button rounded-2xl border border-slate-200 bg-white p-4 font-bold"
-            data-session="1"
-            onclick="selectSession(1)"
-          >
-            Sesi 1
-          </button>
-          <button
-            type="button"
-            class="session-button rounded-2xl border border-slate-200 bg-white p-4 font-bold"
-            data-session="2"
-            onclick="selectSession(2)"
-          >
-            Sesi 2
-          </button>
-          <button
-            type="button"
-            class="session-button rounded-2xl border border-slate-200 bg-white p-4 font-bold"
-            data-session="3"
-            onclick="selectSession(3)"
-          >
-            Sesi 3
-          </button>
-          <button
-            type="button"
-            class="session-button rounded-2xl border border-slate-200 bg-white p-4 font-bold"
-            data-session="4"
-            onclick="selectSession(4)"
-          >
-            Sesi 4
-          </button>
-        </div>
-      </section>
-
-      <section id="exam-section" class="hidden">
-        <div
-          class="flex flex-col md:flex-row md:items-end md:justify-between gap-2 mb-6"
-        >
-          <div>
-            <div class="flex items-center mb-2">
-              <span class="w-2 h-8 bg-indigo-600 rounded-full mr-3"></span>
-              <h2 id="exam-section-title" class="text-2xl font-extrabold">
-                Jadwal Ujian
-              </h2>
-            </div>
-            <p id="exam-section-subtitle" class="text-sm text-slate-500"></p>
-          </div>
-          <div class="text-xs text-slate-500 bg-slate-100 rounded-xl px-4 py-2">
-            <i class="fas fa-shield-alt mr-1"></i> Gunakan Safe Exam Browser
-            (SEB)
-          </div>
-        </div>
-        <div id="exam-grid" class="space-y-6"></div>
-      </section>
-
-      <div
-        id="initial-placeholder"
-        class="text-center py-12 px-5 bg-slate-100/70 rounded-3xl border border-dashed border-slate-300"
-      >
-        <div class="text-4xl text-slate-400 mb-4">
-          <i class="fas fa-arrow-up"></i>
-        </div>
-        <h3 class="font-bold text-lg text-slate-700">
-          Jadwal Belum Ditampilkan
-        </h3>
-        <p class="text-sm text-slate-500 mt-2">
-          Silakan pilih tingkat kelas terlebih dahulu, lalu pilih sesi ujian
-          1–4.
-        </p>
-      </div>
-
-      <div class="mt-16 text-center">
-        <button
-          type="button"
-          onclick="openAdminModal()"
-          class="bg-slate-200 hover:bg-slate-300 text-slate-600 text-xs px-4 py-2 rounded-full transition-all"
-        >
-          <i class="fas fa-user-shield mr-1"></i> AKSES PROKTOR / ADMIN
-        </button>
-      </div>
-    </main>
-
-    <footer class="bg-slate-900 text-slate-400 py-10 text-center">
-      <div class="max-w-4xl mx-auto px-4">
-        <p class="font-bold text-white mb-2 italic">
-          "Pendidikan adalah senjata paling ampuh yang bisa digunakan untuk
-          mengubah dunia."
-        </p>
-        <p class="text-sm">
-          &copy; 2026 SMP Negeri 1 Manonjaya. Portal ASABK 2026.
-        </p>
-      </div>
-    </footer>
-
-    <div
-      id="admin-modal"
-      class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300"
-    >
-      <div
-        class="bg-white rounded-3xl shadow-2xl p-8 max-w-sm w-full mx-4 transform scale-95 transition-transform duration-300"
-      >
-        <div class="text-center mb-6">
-          <div
-            class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"
-          >
-            <i class="fas fa-user-shield"></i>
-          </div>
-          <h3 class="text-xl font-bold">Akses Proktor</h3>
-          <p class="text-sm text-slate-500 mt-1">
-            Masukkan PIN pengawas untuk membuka akses waktu ujian.
-          </p>
-        </div>
-        <div class="space-y-4">
-          <input
-            type="password"
-            id="admin-pin-input"
-            placeholder="Masukkan PIN"
-            class="w-full px-4 py-3 rounded-2xl border border-slate-200 text-center font-mono text-lg tracking-widest"
-          />
-          <div
-            id="modal-error-msg"
-            class="text-red-500 text-xs text-center font-bold hidden"
-          >
-            PIN yang Anda masukkan salah!
-          </div>
-          <div
-            id="modal-success-msg"
-            class="text-green-600 text-xs text-center font-bold hidden"
-          ></div>
-          <div class="flex gap-3 pt-2">
-            <button
-              type="button"
-              onclick="closeAdminModal()"
-              class="w-1/2 py-3 bg-slate-100 text-slate-600 font-bold rounded-2xl text-sm"
-            >
-              Batal</button
-            ><button
-              type="button"
-              onclick="submitAdminPin()"
-              class="w-1/2 py-3 bg-blue-600 text-white font-bold rounded-2xl text-sm"
-            >
-              Verifikasi
-            </button>
-          </div>
-        </div>
-      </div>
+  <main class="max-w-6xl mx-auto px-4 py-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10 -mt-16 relative z-10">
+      <div class="glass-card p-5 rounded-3xl shadow-lg border-t-4 border-blue-600"><h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Status Portal</h3><div class="flex items-center"><span class="w-3 h-3 bg-green-500 rounded-full animate-pulse mr-2"></span><span class="font-bold text-lg">Sistem Online</span></div></div>
+      <div class="glass-card p-5 rounded-3xl shadow-lg border-t-4 border-amber-500"><h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Pilihan Ujian</h3><div id="active-session-text" class="font-bold text-lg">Pilih kelas dan sesi</div></div>
+      <div class="glass-card p-5 rounded-3xl shadow-lg border-t-4 border-indigo-600"><h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Tahun Pelajaran</h3><div class="font-bold text-lg">2026 / 2027</div></div>
     </div>
 
-    <script>
-      // Isi URL Google Form per tingkat dan mata pelajaran setelah tautan dari guru tersedia.
-      // URL sengaja dikosongkan agar tautan ujian lama tidak digunakan secara tidak sengaja.
-      // Tautan Google Form Kelas VII sudah diisi. Kelas VIII dan IX menunggu tautan guru.
-      const formLinks = {
-        7: {
-          "PAI-BP":
-            "https://docs.google.com/forms/d/e/1FAIpQLSeaCylyKeIkJg8XfhhJSDnsOtCZJ3KP9oh37sJQN6nZtsFCvQ/viewform?usp=dialog",
-          PPKn: "https://docs.google.com/forms/d/e/1FAIpQLSe03mdMHW8O0Oo_J7xjV9pnoLXXilAhOXkLRz21YLx5PVnBpQ/viewform?usp=dialog",
-          "Bahasa Indonesia":
-            "https://docs.google.com/forms/d/e/1FAIpQLSdpw2cTvSx4TdUvwGCxkVha-03acM4SjF4tQx2Nz-GGeyYvRw/viewform?usp=dialog",
-          IPS: "https://docs.google.com/forms/d/e/1FAIpQLSfN0sfyQ4M7oNxzUKNEDG0o8RPJI2WaFD5OOCjkQTXxqP19SA/viewform?usp=dialog",
-          IPA: "https://docs.google.com/forms/d/e/1FAIpQLSeEppLX29JliVtrXUKl3McGDxSH9FNbE78ozftak4nECy4DhQ/viewform?usp=dialog",
-          "Bahasa Sunda":
-            "https://docs.google.com/forms/d/e/1FAIpQLSc8AYYa_UR7JnocEZHqV1_QaQHoaJ295BsuAypbNloCrLaYUw/viewform?usp=dialog",
-          "Bahasa Inggris":
-            "https://docs.google.com/forms/d/e/1FAIpQLSctiRJ_NCcLr4hLy9HznXhw2lNxVSxY9xHddkdwxnskBXnvKw/viewform?usp=dialog",
-          Informatika:
-            "https://docs.google.com/forms/d/e/1FAIpQLSf3e9DPVdsmgrvAkekYvsSAXTOd3BmrI9rMmC6dcCvAB0IQsw/viewform?usp=dialog",
-          Matematika:
-            "https://docs.google.com/forms/d/e/1FAIpQLSczW3Ie5LpYW6Kj3kdZUl3yAoG0mNFVc3HJ27Aevx80a617vQ/viewform?usp=dialog",
-        },
-        8: {
-          "PAI-BP": "",
-          PPKn: "",
-          "Bahasa Indonesia": "",
-          IPS: "",
-          IPA: "",
-          "Bahasa Sunda": "",
-          "Bahasa Inggris": "",
-          Informatika: "",
-          Matematika: "",
-        },
-        9: {
-          "PAI-BP": "",
-          PPKn: "",
-          "Bahasa Indonesia": "",
-          IPS: "",
-          IPA: "",
-          "Bahasa Sunda": "",
-          "Bahasa Inggris": "",
-          Informatika: "",
-          Matematika: "",
-        },
-      };
+    <section class="mb-10">
+      <div class="flex items-center mb-5"><span class="w-2 h-8 bg-blue-600 rounded-full mr-3"></span><h2 class="text-2xl font-extrabold">1. Pilih Tingkat Kelas</h2></div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <button type="button" class="grade-button w-full text-left bg-white border border-slate-200 rounded-3xl p-5 shadow-sm" data-grade="7" onclick="selectClass(7)"><div class="flex items-center gap-4"><div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl"><i class="fas fa-user-graduate"></i></div><div><div class="font-extrabold text-xl">KELAS VII</div><div class="text-sm opacity-75">9–13 November 2026</div></div></div></button>
+        <button type="button" class="grade-button w-full text-left bg-white border border-slate-200 rounded-3xl p-5 shadow-sm" data-grade="8" onclick="selectClass(8)"><div class="flex items-center gap-4"><div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl"><i class="fas fa-user-graduate"></i></div><div><div class="font-extrabold text-xl">KELAS VIII</div><div class="text-sm opacity-75">16–20 November 2026</div></div></div></button>
+        <button type="button" class="grade-button w-full text-left bg-white border border-slate-200 rounded-3xl p-5 shadow-sm" data-grade="9" onclick="selectClass(9)"><div class="flex items-center gap-4"><div class="w-14 h-14 rounded-2xl bg-violet-50 text-violet-600 flex items-center justify-center text-2xl"><i class="fas fa-user-graduate"></i></div><div><div class="font-extrabold text-xl">KELAS IX</div><div class="text-sm opacity-75">23–27 November 2026</div></div></div></button>
+      </div>
+    </section>
 
-      const gradeSchedule = {
-        7: {
-          start: "2026-11-09",
-          dates: [
-            "2026-11-09",
-            "2026-11-10",
-            "2026-11-11",
-            "2026-11-12",
-            "2026-11-13",
-          ],
-        },
-        8: {
-          start: "2026-11-16",
-          dates: [
-            "2026-11-16",
-            "2026-11-17",
-            "2026-11-18",
-            "2026-11-19",
-            "2026-11-20",
-          ],
-        },
-        9: {
-          start: "2026-11-23",
-          dates: [
-            "2026-11-23",
-            "2026-11-24",
-            "2026-11-25",
-            "2026-11-26",
-            "2026-11-27",
-          ],
-        },
-      };
-      const weekdaySubjects = [
-        ["PAI-BP", "PPKn"],
-        ["Bahasa Indonesia", "IPS"],
-        ["IPA", "Bahasa Sunda"],
-        ["Bahasa Inggris", "Informatika"],
-        ["Matematika"],
-      ];
-      const weekdaySessionTimes = [
-        [
-          ["07:30", "08:05"],
-          ["08:05", "08:40"],
-        ],
-        [
-          ["08:55", "09:30"],
-          ["09:30", "10:05"],
-        ],
-        [
-          ["10:20", "10:55"],
-          ["10:55", "11:30"],
-        ],
-        [
-          ["12:30", "13:05"],
-          ["13:05", "13:40"],
-        ],
-      ];
-      const fridaySessionTimes = [
-        ["07:30", "08:05"],
-        ["08:20", "08:55"],
-        ["09:10", "09:45"],
-        ["10:00", "10:35"],
-      ];
-      let selectedGrade = null;
-      let selectedSession = 1;
-      let adminMode = false;
+    <section id="session-section" class="mb-10 hidden">
+      <div class="flex items-center mb-3"><span class="w-2 h-8 bg-emerald-600 rounded-full mr-3"></span><h2 class="text-2xl font-extrabold">2. Pilih Sesi Ujian</h2></div>
+      <p class="text-sm text-slate-500 mb-5">Pilih sesi yang ditetapkan untuk Anda. Sesi dapat diganti sebelum ujian dimulai.</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="session-buttons">
+        <button type="button" class="session-button rounded-2xl border border-slate-200 bg-white p-4 font-bold" data-session="1" onclick="selectSession(1)">Sesi 1</button>
+        <button type="button" class="session-button rounded-2xl border border-slate-200 bg-white p-4 font-bold" data-session="2" onclick="selectSession(2)">Sesi 2</button>
+        <button type="button" class="session-button rounded-2xl border border-slate-200 bg-white p-4 font-bold" data-session="3" onclick="selectSession(3)">Sesi 3</button>
+        <button type="button" class="session-button rounded-2xl border border-slate-200 bg-white p-4 font-bold" data-session="4" onclick="selectSession(4)">Sesi 4</button>
+      </div>
+    </section>
 
-      function localDate(dateString) {
-        const [year, month, day] = dateString.split("-").map(Number);
-        return new Date(year, month - 1, day);
+    <section id="exam-section" class="hidden">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-2 mb-6"><div><div class="flex items-center mb-2"><span class="w-2 h-8 bg-indigo-600 rounded-full mr-3"></span><h2 id="exam-section-title" class="text-2xl font-extrabold">Jadwal Ujian</h2></div><p id="exam-section-subtitle" class="text-sm text-slate-500"></p></div><div class="text-xs text-slate-500 bg-slate-100 rounded-xl px-4 py-2"><i class="fas fa-shield-alt mr-1"></i> Gunakan Safe Exam Browser (SEB)</div></div>
+      <div id="exam-grid" class="space-y-6"></div>
+    </section>
+
+    <div id="initial-placeholder" class="text-center py-12 px-5 bg-slate-100/70 rounded-3xl border border-dashed border-slate-300"><div class="text-4xl text-slate-400 mb-4"><i class="fas fa-arrow-up"></i></div><h3 class="font-bold text-lg text-slate-700">Jadwal Belum Ditampilkan</h3><p class="text-sm text-slate-500 mt-2">Silakan pilih tingkat kelas terlebih dahulu, lalu pilih sesi ujian 1–4.</p></div>
+
+    <div class="mt-16 text-center"><button type="button" onclick="openAdminModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-600 text-xs px-4 py-2 rounded-full transition-all"><i class="fas fa-user-shield mr-1"></i> AKSES PROKTOR / ADMIN</button></div>
+  </main>
+
+  <footer class="bg-slate-900 text-slate-400 py-10 text-center"><div class="max-w-4xl mx-auto px-4"><p class="font-bold text-white mb-2 italic">"Pendidikan adalah senjata paling ampuh yang bisa digunakan untuk mengubah dunia."</p><p class="text-sm">&copy; 2026 SMP Negeri 1 Manonjaya. Portal ASABK 2026.</p></div></footer>
+
+  <div id="admin-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300"><div class="bg-white rounded-3xl shadow-2xl p-8 max-w-sm w-full mx-4 transform scale-95 transition-transform duration-300"><div class="text-center mb-6"><div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fas fa-user-shield"></i></div><h3 class="text-xl font-bold">Akses Proktor</h3><p class="text-sm text-slate-500 mt-1">Masukkan PIN pengawas untuk membuka akses waktu ujian.</p></div><div class="space-y-4"><input type="password" id="admin-pin-input" placeholder="Masukkan PIN" class="w-full px-4 py-3 rounded-2xl border border-slate-200 text-center font-mono text-lg tracking-widest" /><div id="modal-error-msg" class="text-red-500 text-xs text-center font-bold hidden">PIN yang Anda masukkan salah!</div><div id="modal-success-msg" class="text-green-600 text-xs text-center font-bold hidden"></div><div class="flex gap-3 pt-2"><button type="button" onclick="closeAdminModal()" class="w-1/2 py-3 bg-slate-100 text-slate-600 font-bold rounded-2xl text-sm">Batal</button><button type="button" onclick="submitAdminPin()" class="w-1/2 py-3 bg-blue-600 text-white font-bold rounded-2xl text-sm">Verifikasi</button></div></div></div></div>
+
+  <script>
+    // Isi URL Google Form per tingkat dan mata pelajaran setelah tautan dari guru tersedia.
+    // URL sengaja dikosongkan agar tautan ujian lama tidak digunakan secara tidak sengaja.
+    // Tautan Google Form Kelas VII sudah diisi. Kelas VIII dan IX menunggu tautan guru.
+    const formLinks = {
+      7: {
+        "PAI-BP": "https://docs.google.com/forms/d/e/1FAIpQLSeaCylyKeIkJg8XfhhJSDnsOtCZJ3KP9oh37sJQN6nZtsFCvQ/viewform?usp=dialog",
+        "PPKn": "https://docs.google.com/forms/d/e/1FAIpQLSe03mdMHW8O0Oo_J7xjV9pnoLXXilAhOXkLRz21YLx5PVnBpQ/viewform?usp=dialog",
+        "Bahasa Indonesia": "https://docs.google.com/forms/d/e/1FAIpQLSdpw2cTvSx4TdUvwGCxkVha-03acM4SjF4tQx2Nz-GGeyYvRw/viewform?usp=dialog",
+        "IPS": "https://docs.google.com/forms/d/e/1FAIpQLSfN0sfyQ4M7oNxzUKNEDG0o8RPJI2WaFD5OOCjkQTXxqP19SA/viewform?usp=dialog",
+        "IPA": "https://docs.google.com/forms/d/e/1FAIpQLSeEppLX29JliVtrXUKl3McGDxSH9FNbE78ozftak4nECy4DhQ/viewform?usp=dialog",
+        "Bahasa Sunda": "https://docs.google.com/forms/d/e/1FAIpQLSc8AYYa_UR7JnocEZHqV1_QaQHoaJ295BsuAypbNloCrLaYUw/viewform?usp=dialog",
+        "Bahasa Inggris": "https://docs.google.com/forms/d/e/1FAIpQLSctiRJ_NCcLr4hLy9HznXhw2lNxVSxY9xHddkdwxnskBXnvKw/viewform?usp=dialog",
+        "Informatika": "https://docs.google.com/forms/d/e/1FAIpQLSf3e9DPVdsmgrvAkekYvsSAXTOd3BmrI9rMmC6dcCvAB0IQsw/viewform?usp=dialog",
+        "Matematika": "https://docs.google.com/forms/d/e/1FAIpQLSczW3Ie5LpYW6Kj3kdZUl3yAoG0mNFVc3HJ27Aevx80a617vQ/viewform?usp=dialog"
+      },
+      8: {
+        "PAI-BP": "https://docs.google.com/forms/d/e/1FAIpQLSdWVy3mUY8p6ogcJtsL9sNqiFXk5wlVYy7WAWh4IwDRz7dEpA/viewform?usp=dialog",
+        "PPKn": "https://docs.google.com/forms/d/e/1FAIpQLSdu8dnkuHjih1pUWBRoBEPHZKXZwSpRRj6QY8SZfGITcxMvdA/viewform?usp=dialog",
+        "Bahasa Indonesia": "https://docs.google.com/forms/d/e/1FAIpQLScLgNRJZCXF349VxtiCcKRe5TK6JfuXVJvD_QnJvwdNz6hgMQ/viewform?usp=dialog",
+        "IPS": "https://docs.google.com/forms/d/e/1FAIpQLSfYje13ukA82nwYxrqgBbgY79eK3m28Se6BQwvB0WqzEBVQnA/viewform?usp=dialog",
+        "IPA": "https://docs.google.com/forms/d/e/1FAIpQLSf7AB116ZyVrO0h2_9k5WEWo2YHhhy29PaWSuq1NIoBza2VWg/viewform?usp=dialog",
+        "Bahasa Sunda": "https://docs.google.com/forms/d/e/1FAIpQLSfNSZVsnZzEmLQX2gcBLaYInMGhz_x9myBVv6gaxHoPUwFodA/viewform?usp=dialog",
+        "Bahasa Inggris": "https://docs.google.com/forms/d/e/1FAIpQLSfADU7ExTrLZjuTu95IbxPHTb9FnAxpG95GtgrjC1dj6fYYSw/viewform?usp=dialog",
+        "Informatika": "https://docs.google.com/forms/d/e/1FAIpQLScXchsCJX0_ZFf7XrBz9ddErRJ3iIFtQJfcg2HSKL0SCs2VEQ/viewform?usp=dialog",
+        "Matematika": "https://docs.google.com/forms/d/e/1FAIpQLSduCCOwArl0BgsBon5WR7ycw26Yfv4YN3DMoqeP1qH96aCkrw/viewform?usp=dialog"
+      },
+      9: { "PAI-BP":"", "PPKn":"", "Bahasa Indonesia":"", "IPS":"", "IPA":"", "Bahasa Sunda":"", "Bahasa Inggris":"", "Informatika":"", "Matematika":"" }
+    };
+
+    const gradeSchedule = {
+      7: { start: "2026-11-09", dates: ["2026-11-09","2026-11-10","2026-11-11","2026-11-12","2026-11-13"] },
+      8: { start: "2026-11-16", dates: ["2026-11-16","2026-11-17","2026-11-18","2026-11-19","2026-11-20"] },
+      9: { start: "2026-11-23", dates: ["2026-11-23","2026-11-24","2026-11-25","2026-11-26","2026-11-27"] }
+    };
+    const weekdaySubjects = [
+      ["PAI-BP", "PPKn"],
+      ["Bahasa Indonesia", "IPS"],
+      ["IPA", "Bahasa Sunda"],
+      ["Bahasa Inggris", "Informatika"],
+      ["Matematika"]
+    ];
+    const weekdaySessionTimes = [
+      [["07:30","08:05"],["08:05","08:40"]],
+      [["08:55","09:30"],["09:30","10:05"]],
+      [["10:20","10:55"],["10:55","11:30"]],
+      [["12:30","13:05"],["13:05","13:40"]]
+    ];
+    const fridaySessionTimes = [["07:30","08:05"],["08:20","08:55"],["09:10","09:45"],["10:00","10:35"]];
+    let selectedGrade = null;
+    let selectedSession = 1;
+    let adminMode = false;
+
+    function localDate(dateString) {
+      const [year, month, day] = dateString.split("-").map(Number);
+      return new Date(year, month - 1, day);
+    }
+    function dateLabel(dateString) {
+      return localDate(dateString).toLocaleDateString("id-ID", { weekday:"long", day:"numeric", month:"long", year:"numeric" });
+    }
+    function currentTimeLabel() {
+      return new Date().toLocaleDateString("id-ID", { weekday:"long", year:"numeric", month:"long", day:"numeric", hour:"2-digit", minute:"2-digit", second:"2-digit" });
+    }
+    function selectClass(grade) {
+      selectedGrade = grade;
+      document.getElementById("initial-placeholder").classList.add("hidden");
+      document.getElementById("session-section").classList.remove("hidden");
+      document.getElementById("exam-section").classList.remove("hidden");
+      document.querySelectorAll(".grade-button").forEach(button => button.classList.toggle("active", Number(button.dataset.grade) === grade));
+      renderSessions();
+      renderSchedule();
+    }
+    function selectSession(session) {
+      selectedSession = session;
+      renderSessions();
+      renderSchedule();
+    }
+    function renderSessions() {
+      document.querySelectorAll(".session-button").forEach(button => button.classList.toggle("active", Number(button.dataset.session) === selectedSession));
+      document.getElementById("active-session-text").textContent = selectedGrade ? `Kelas ${romanGrade(selectedGrade)} · Sesi ${selectedSession}` : "Pilih kelas dan sesi";
+    }
+    function romanGrade(grade) { return ({7:"VII",8:"VIII",9:"IX"})[grade] || String(grade); }
+    function makeExamEntry(grade, date, subject, start, end, session) {
+      return { grade, date, subject, start, end, session, link: formLinks[grade][subject] || "" };
+    }
+    function examsForDate(grade, date, session) {
+      const day = localDate(date).getDay(); // Senin=1 ... Jumat=5
+      if (day < 1 || day > 5) return [];
+      if (day === 5) {
+        const [start, end] = fridaySessionTimes[session - 1];
+        return [makeExamEntry(grade, date, "Matematika", start, end, session)];
       }
-      function dateLabel(dateString) {
-        return localDate(dateString).toLocaleDateString("id-ID", {
-          weekday: "long",
-          day: "numeric",
-          month: "long",
-          year: "numeric",
+      const subjects = weekdaySubjects[day - 1];
+      const times = weekdaySessionTimes[session - 1];
+      return subjects.map((subject, index) => makeExamEntry(grade, date, subject, times[index][0], times[index][1], session));
+    }
+    function examState(exam) {
+      const now = new Date();
+      const start = new Date(`${exam.date}T${exam.start}:00`);
+      const end = new Date(`${exam.date}T${exam.end}:00`);
+      if (now >= start && now <= end) return "ongoing";
+      if (now < start) return "upcoming";
+      return "finished";
+    }
+    function renderSchedule() {
+      if (!selectedGrade) return;
+      const dates = gradeSchedule[selectedGrade].dates;
+      const grid = document.getElementById("exam-grid");
+      grid.innerHTML = "";
+      document.getElementById("exam-section-title").textContent = `Jadwal Ujian · Kelas ${romanGrade(selectedGrade)}`;
+      document.getElementById("exam-section-subtitle").textContent = `Sesi ${selectedSession} · Jadwal ${dateLabel(dates[0]).split(",")[0]}–${dateLabel(dates[4])}`;
+      let active = "Tidak ada ujian berlangsung";
+
+      dates.forEach(date => {
+        const exams = examsForDate(selectedGrade, date, selectedSession);
+        const dayCard = document.createElement("section");
+        dayCard.className = "glass-card rounded-3xl shadow-md overflow-hidden";
+        const dayHeader = document.createElement("div");
+        dayHeader.className = "bg-slate-50 border-b border-slate-200 px-5 py-4";
+        dayHeader.innerHTML = `<h3 class="font-extrabold text-lg text-slate-800"><i class="far fa-calendar-alt text-blue-600 mr-2"></i>${dateLabel(date)}</h3><p class="text-xs text-slate-500 mt-1">${localDate(date).getDay() === 5 ? "1 mata pelajaran pada sesi ini" : "2 mata pelajaran pada sesi ini"}</p>`;
+        dayCard.appendChild(dayHeader);
+        const examGrid = document.createElement("div");
+        examGrid.className = `grid grid-cols-1 ${exams.length > 1 ? 'md:grid-cols-2' : ''} gap-4 p-4 md:p-5`;
+        exams.forEach(exam => {
+          const state = examState(exam);
+          const available = Boolean(exam.link.trim());
+          const canStart = available && (state === "ongoing" || adminMode);
+          let label = "";
+          let badgeClass = "";
+          if (!available) { label = "Link belum diisi"; badgeClass = "bg-amber-100 text-amber-800"; }
+          else if (state === "ongoing") { label = "Sesi Berlangsung"; badgeClass = "bg-green-100 text-green-700"; active = exam.subject; }
+          else if (state === "upcoming") { label = `Mulai ${exam.start}`; badgeClass = "bg-blue-100 text-blue-700"; }
+          else { label = "Sesi Selesai"; badgeClass = "bg-slate-100 text-slate-500"; }
+          if (adminMode && available && state !== "ongoing") { label = state === "finished" ? "Mode proktor aktif" : "Akses proktor aktif"; badgeClass = "bg-indigo-100 text-indigo-700"; }
+          const article = document.createElement("article");
+          article.className = "border border-slate-200 rounded-2xl p-5 flex flex-col justify-between gap-5";
+          const info = document.createElement("div");
+          info.innerHTML = `<div class="flex items-start justify-between gap-3 mb-3"><span class="text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wide ${badgeClass}">${label}</span><span class="text-xs text-slate-400 font-semibold">Sesi ${exam.session}</span></div><h4 class="text-xl font-extrabold text-slate-800">${exam.subject}</h4><p class="text-sm text-slate-500 mt-2"><i class="far fa-clock mr-2"></i>${exam.start}–${exam.end}</p>`;
+          article.appendChild(info);
+          const linkButton = document.createElement("a");
+          linkButton.className = `btn-exam block text-center py-3 px-5 rounded-xl font-bold ${canStart ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md" : "bg-slate-100 text-slate-400 pointer-events-none"}`;
+          linkButton.textContent = !available ? "Menunggu Tautan Ujian" : state === "finished" && !adminMode ? "Sesi Selesai" : canStart ? "Mulai Ujian" : `Belum Dibuka · ${exam.start}`;
+          if (canStart) {
+            linkButton.href = exam.link;
+            // Buka pada tab/jendela yang sama agar alur tetap berada di dalam SEB.
+            linkButton.target = "_self";
+            linkButton.rel = "noopener";
+          } else {
+            linkButton.removeAttribute("href");
+            linkButton.setAttribute("aria-disabled", "true");
+            linkButton.tabIndex = -1;
+          }
+          article.appendChild(linkButton);
+          examGrid.appendChild(article);
         });
-      }
-      function currentTimeLabel() {
-        return new Date().toLocaleDateString("id-ID", {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        });
-      }
-      function selectClass(grade) {
-        selectedGrade = grade;
-        document.getElementById("initial-placeholder").classList.add("hidden");
-        document.getElementById("session-section").classList.remove("hidden");
-        document.getElementById("exam-section").classList.remove("hidden");
-        document
-          .querySelectorAll(".grade-button")
-          .forEach((button) =>
-            button.classList.toggle(
-              "active",
-              Number(button.dataset.grade) === grade,
-            ),
-          );
-        renderSessions();
-        renderSchedule();
-      }
-      function selectSession(session) {
-        selectedSession = session;
-        renderSessions();
-        renderSchedule();
-      }
-      function renderSessions() {
-        document
-          .querySelectorAll(".session-button")
-          .forEach((button) =>
-            button.classList.toggle(
-              "active",
-              Number(button.dataset.session) === selectedSession,
-            ),
-          );
-        document.getElementById("active-session-text").textContent =
-          selectedGrade
-            ? `Kelas ${romanGrade(selectedGrade)} · Sesi ${selectedSession}`
-            : "Pilih kelas dan sesi";
-      }
-      function romanGrade(grade) {
-        return { 7: "VII", 8: "VIII", 9: "IX" }[grade] || String(grade);
-      }
-      function makeExamEntry(grade, date, subject, start, end, session) {
-        return {
-          grade,
-          date,
-          subject,
-          start,
-          end,
-          session,
-          link: formLinks[grade][subject] || "",
-        };
-      }
-      function examsForDate(grade, date, session) {
-        const day = localDate(date).getDay(); // Senin=1 ... Jumat=5
-        if (day < 1 || day > 5) return [];
-        if (day === 5) {
-          const [start, end] = fridaySessionTimes[session - 1];
-          return [
-            makeExamEntry(grade, date, "Matematika", start, end, session),
-          ];
-        }
-        const subjects = weekdaySubjects[day - 1];
-        const times = weekdaySessionTimes[session - 1];
-        return subjects.map((subject, index) =>
-          makeExamEntry(
-            grade,
-            date,
-            subject,
-            times[index][0],
-            times[index][1],
-            session,
-          ),
-        );
-      }
-      function examState(exam) {
-        const now = new Date();
-        const start = new Date(`${exam.date}T${exam.start}:00`);
-        const end = new Date(`${exam.date}T${exam.end}:00`);
-        if (now >= start && now <= end) return "ongoing";
-        if (now < start) return "upcoming";
-        return "finished";
-      }
-      function renderSchedule() {
-        if (!selectedGrade) return;
-        const dates = gradeSchedule[selectedGrade].dates;
-        const grid = document.getElementById("exam-grid");
-        grid.innerHTML = "";
-        document.getElementById("exam-section-title").textContent =
-          `Jadwal Ujian · Kelas ${romanGrade(selectedGrade)}`;
-        document.getElementById("exam-section-subtitle").textContent =
-          `Sesi ${selectedSession} · Jadwal ${dateLabel(dates[0]).split(",")[0]}–${dateLabel(dates[4])}`;
-        let active = "Tidak ada ujian berlangsung";
-
-        dates.forEach((date) => {
-          const exams = examsForDate(selectedGrade, date, selectedSession);
-          const dayCard = document.createElement("section");
-          dayCard.className =
-            "glass-card rounded-3xl shadow-md overflow-hidden";
-          const dayHeader = document.createElement("div");
-          dayHeader.className =
-            "bg-slate-50 border-b border-slate-200 px-5 py-4";
-          dayHeader.innerHTML = `<h3 class="font-extrabold text-lg text-slate-800"><i class="far fa-calendar-alt text-blue-600 mr-2"></i>${dateLabel(date)}</h3><p class="text-xs text-slate-500 mt-1">${localDate(date).getDay() === 5 ? "1 mata pelajaran pada sesi ini" : "2 mata pelajaran pada sesi ini"}</p>`;
-          dayCard.appendChild(dayHeader);
-          const examGrid = document.createElement("div");
-          examGrid.className = `grid grid-cols-1 ${exams.length > 1 ? "md:grid-cols-2" : ""} gap-4 p-4 md:p-5`;
-          exams.forEach((exam) => {
-            const state = examState(exam);
-            const available = Boolean(exam.link.trim());
-            const canStart = available && (state === "ongoing" || adminMode);
-            let label = "";
-            let badgeClass = "";
-            if (!available) {
-              label = "Link belum diisi";
-              badgeClass = "bg-amber-100 text-amber-800";
-            } else if (state === "ongoing") {
-              label = "Sesi Berlangsung";
-              badgeClass = "bg-green-100 text-green-700";
-              active = exam.subject;
-            } else if (state === "upcoming") {
-              label = `Mulai ${exam.start}`;
-              badgeClass = "bg-blue-100 text-blue-700";
-            } else {
-              label = "Sesi Selesai";
-              badgeClass = "bg-slate-100 text-slate-500";
-            }
-            if (adminMode && available && state !== "ongoing") {
-              label =
-                state === "finished"
-                  ? "Mode proktor aktif"
-                  : "Akses proktor aktif";
-              badgeClass = "bg-indigo-100 text-indigo-700";
-            }
-            const article = document.createElement("article");
-            article.className =
-              "border border-slate-200 rounded-2xl p-5 flex flex-col justify-between gap-5";
-            const info = document.createElement("div");
-            info.innerHTML = `<div class="flex items-start justify-between gap-3 mb-3"><span class="text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wide ${badgeClass}">${label}</span><span class="text-xs text-slate-400 font-semibold">Sesi ${exam.session}</span></div><h4 class="text-xl font-extrabold text-slate-800">${exam.subject}</h4><p class="text-sm text-slate-500 mt-2"><i class="far fa-clock mr-2"></i>${exam.start}–${exam.end}</p>`;
-            article.appendChild(info);
-            const linkButton = document.createElement("a");
-            linkButton.className = `btn-exam block text-center py-3 px-5 rounded-xl font-bold ${canStart ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md" : "bg-slate-100 text-slate-400 pointer-events-none"}`;
-            linkButton.textContent = !available
-              ? "Menunggu Tautan Ujian"
-              : state === "finished" && !adminMode
-                ? "Sesi Selesai"
-                : canStart
-                  ? "Mulai Ujian"
-                  : `Belum Dibuka · ${exam.start}`;
-            if (canStart) {
-              linkButton.href = exam.link;
-              // Buka pada tab/jendela yang sama agar alur tetap berada di dalam SEB.
-              linkButton.target = "_self";
-              linkButton.rel = "noopener";
-            } else {
-              linkButton.removeAttribute("href");
-              linkButton.setAttribute("aria-disabled", "true");
-              linkButton.tabIndex = -1;
-            }
-            article.appendChild(linkButton);
-            examGrid.appendChild(article);
-          });
-          dayCard.appendChild(examGrid);
-          grid.appendChild(dayCard);
-        });
-        document.getElementById("active-session-text").textContent =
-          active === "Tidak ada ujian berlangsung"
-            ? `Kelas ${romanGrade(selectedGrade)} · Sesi ${selectedSession}`
-            : `${active} · Sesi ${selectedSession}`;
-      }
-
-      function updateClock() {
-        document.getElementById("current-time-display").textContent =
-          currentTimeLabel();
-        if (selectedGrade) renderSchedule();
-      }
-      const modal = document.getElementById("admin-modal");
-      const pinInput = document.getElementById("admin-pin-input");
-      const errorMsg = document.getElementById("modal-error-msg");
-      const successMsg = document.getElementById("modal-success-msg");
-      function openAdminModal() {
-        modal.classList.remove("hidden");
-        setTimeout(() => {
-          modal.classList.remove("opacity-0");
-          modal.querySelector("div").classList.remove("scale-95");
-        }, 10);
-        pinInput.focus();
-      }
-      function closeAdminModal() {
-        modal.classList.add("opacity-0");
-        modal.querySelector("div").classList.add("scale-95");
-        errorMsg.classList.add("hidden");
-        successMsg.classList.add("hidden");
-        pinInput.value = "";
-        setTimeout(() => modal.classList.add("hidden"), 300);
-      }
-      function submitAdminPin() {
-        if (pinInput.value === "2026") {
-          adminMode = !adminMode;
-          errorMsg.classList.add("hidden");
-          successMsg.classList.remove("hidden");
-          successMsg.textContent = adminMode
-            ? "Mode proktor aktif."
-            : "Mode proktor nonaktif.";
-          setTimeout(() => {
-            closeAdminModal();
-            updateClock();
-          }, 1000);
-        } else {
-          errorMsg.classList.remove("hidden");
-          pinInput.value = "";
-          pinInput.focus();
-        }
-      }
-      pinInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") submitAdminPin();
+        dayCard.appendChild(examGrid);
+        grid.appendChild(dayCard);
       });
-      setInterval(updateClock, 1000);
-      updateClock();
-    </script>
-  </body>
+      document.getElementById("active-session-text").textContent = active === "Tidak ada ujian berlangsung" ? `Kelas ${romanGrade(selectedGrade)} · Sesi ${selectedSession}` : `${active} · Sesi ${selectedSession}`;
+    }
+
+    function updateClock() {
+      document.getElementById("current-time-display").textContent = currentTimeLabel();
+      if (selectedGrade) renderSchedule();
+    }
+    const modal = document.getElementById("admin-modal");
+    const pinInput = document.getElementById("admin-pin-input");
+    const errorMsg = document.getElementById("modal-error-msg");
+    const successMsg = document.getElementById("modal-success-msg");
+    function openAdminModal() {
+      modal.classList.remove("hidden");
+      setTimeout(() => { modal.classList.remove("opacity-0"); modal.querySelector("div").classList.remove("scale-95"); }, 10);
+      pinInput.focus();
+    }
+    function closeAdminModal() {
+      modal.classList.add("opacity-0");
+      modal.querySelector("div").classList.add("scale-95");
+      errorMsg.classList.add("hidden"); successMsg.classList.add("hidden"); pinInput.value = "";
+      setTimeout(() => modal.classList.add("hidden"), 300);
+    }
+    function submitAdminPin() {
+      if (pinInput.value === "2026") {
+        adminMode = !adminMode;
+        errorMsg.classList.add("hidden"); successMsg.classList.remove("hidden");
+        successMsg.textContent = adminMode ? "Mode proktor aktif." : "Mode proktor nonaktif.";
+        setTimeout(() => { closeAdminModal(); updateClock(); }, 1000);
+      } else {
+        errorMsg.classList.remove("hidden"); pinInput.value = ""; pinInput.focus();
+      }
+    }
+    pinInput.addEventListener("keydown", event => { if (event.key === "Enter") submitAdminPin(); });
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
 </html>
