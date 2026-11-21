@@ -102,12 +102,22 @@
         "Informatika": "https://docs.google.com/forms/d/e/1FAIpQLScXchsCJX0_ZFf7XrBz9ddErRJ3iIFtQJfcg2HSKL0SCs2VEQ/viewform?usp=dialog",
         "Matematika": "https://docs.google.com/forms/d/e/1FAIpQLSduCCOwArl0BgsBon5WR7ycw26Yfv4YN3DMoqeP1qH96aCkrw/viewform?usp=dialog"
       },
-      9: { "PAI-BP":"", "PPKn":"", "Bahasa Indonesia":"", "IPS":"", "IPA":"", "Bahasa Sunda":"", "Bahasa Inggris":"", "Informatika":"", "Matematika":"" }
+      9: {
+        "PAI-BP": "https://docs.google.com/forms/d/e/1FAIpQLSfnQfLS6eWSzKRbsgqqvRNE1fR3Z39EWIZOBv5C7fis1sqXaw/viewform?usp=dialog",
+        "PPKn": "https://docs.google.com/forms/d/e/1FAIpQLSchOP4LS5qTHqOY9fp3UPfaltMnTmN6gIv45qSHU1tXwJhOMg/viewform?usp=dialog",
+        "Bahasa Indonesia": "https://docs.google.com/forms/d/e/1FAIpQLSeV2GcqKpXeAZoSWjexQGEMx6zVZDSLK6cOiSZgRiGavlCsuA/viewform?usp=dialog",
+        "IPS": "https://docs.google.com/forms/d/e/1FAIpQLSfRgwxU27PDTCAi1yxqsEEH3vswp7KnUX7BCbOQIepvqQ2HwA/viewform?usp=dialog",
+        "IPA": "https://docs.google.com/forms/d/e/1FAIpQLSdLbGyNhku4vdi4HL8edCQhviS618nSOP05uloquhcgbk2OFg/viewform?usp=dialog",
+        "Bahasa Sunda": "https://docs.google.com/forms/d/e/1FAIpQLSdBMYqviyU7VACyrmdfAlYKzjvGoDp5ja3BWkqme5fA4pJQrQ/viewform?usp=dialog",
+        "Bahasa Inggris": "https://docs.google.com/forms/d/e/1FAIpQLSc3P8Eaietob92e8GVln5HJ0o2G0tA3g9pyLnRs2tfQaHL8Eg/viewform?usp=dialog",
+        "Informatika": "https://docs.google.com/forms/d/e/1FAIpQLScRkZCXImeHB9f7zjogt6GaPTd-Tg8ndmGoAdyeoKGrK7ibAA/viewform?usp=dialog",
+        "Matematika": "https://docs.google.com/forms/d/e/1FAIpQLSe74cjvUm-Dc7ltN5B3Ckzjy2BkAJq81P1BLcxLzMSi74K1wA/viewform?usp=dialog"
+      }
     };
 
     const gradeSchedule = {
       7: { start: "2026-11-09", dates: ["2026-11-09","2026-11-10","2026-11-11","2026-11-12","2026-11-13"] },
-      8: { start: "2026-11-16", dates: ["2026-11-16","2026-11-17","2026-11-18","2026-11-19","2026-11-20"] },
+      8: { start: "2026-11-16", dates: ["2026-11-16","2026-11-17","2026-11-18","2026-11-19","2026-11-20","2026-11-30"] },
       9: { start: "2026-11-23", dates: ["2026-11-23","2026-11-24","2026-11-25","2026-11-26","2026-11-27"] }
     };
     const weekdaySubjects = [
@@ -161,6 +171,16 @@
       return { grade, date, subject, start, end, session, link: formLinks[grade][subject] || "" };
     }
     function examsForDate(grade, date, session) {
+      // Penyesuaian khusus Kelas VIII: Bahasa Inggris dan Informatika
+      // dari 19 November 2026 dipindahkan ke 30 November 2026.
+      if (grade === 8 && date === "2026-11-19") return [];
+      if (grade === 8 && date === "2026-11-30") {
+        const times = weekdaySessionTimes[session - 1];
+        return ["Bahasa Inggris", "Informatika"].map((subject, index) =>
+          makeExamEntry(grade, date, subject, times[index][0], times[index][1], session)
+        );
+      }
+
       const day = localDate(date).getDay(); // Senin=1 ... Jumat=5
       if (day < 1 || day > 5) return [];
       if (day === 5) {
@@ -185,7 +205,7 @@
       const grid = document.getElementById("exam-grid");
       grid.innerHTML = "";
       document.getElementById("exam-section-title").textContent = `Jadwal Ujian · Kelas ${romanGrade(selectedGrade)}`;
-      document.getElementById("exam-section-subtitle").textContent = `Sesi ${selectedSession} · Jadwal ${dateLabel(dates[0]).split(",")[0]}–${dateLabel(dates[4])}`;
+      document.getElementById("exam-section-subtitle").textContent = `Sesi ${selectedSession} · Jadwal ${dateLabel(dates[0]).split(",")[0]}–${dateLabel(dates[dates.length - 1])}`;
       let active = "Tidak ada ujian berlangsung";
 
       dates.forEach(date => {
